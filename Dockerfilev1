@@ -1,0 +1,33 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+COPY *.sln .
+COPY UserPermission.Domain/*.csproj ./UserPermission.Domain/
+COPY UserPermission.Repository/*.csproj ./UserPermission.Repository/
+COPY UserPermission.Business/*.csproj ./UserPermission.Business/
+COPY UserPermission.Api/*.csproj ./UserPermission.Api/
+#
+RUN dotnet restore 
+#
+# copy everything else and build app
+COPY UserPermission.Domain/. ./UserPermission.Domain/
+COPY UserPermission.Repository/. ./UserPermission.Repository/
+COPY UserPermission.Business/. ./UserPermission.Business/
+COPY UserPermission.Api/. ./UserPermission.Api/
+
+WORKDIR "/src/UserPermission.Api"
+RUN dotnet build -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "UserPermission.Api.dll"]
