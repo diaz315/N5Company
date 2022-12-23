@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -129,7 +130,7 @@ namespace UserPermission.Business
         {
             try
             {
-                var rs = _unitOfWork.PermissionRepository.Entities.Where(x=>x.Id == entity.Id || (entity==null || entity.Id == 0)).ToList();
+                var rs = _unitOfWork.PermissionRepository.Entities.Include(x=>x.PermissionTypes).Where(x=>x.Id == entity.Id || (entity==null || entity.Id == 0)).ToList();
                 return rs;
             }
             catch
