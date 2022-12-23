@@ -33,8 +33,6 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
     builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
 }));
 
-connection = "Server=JOSEDIAZ;Database=Permission_1;Trusted_Connection=True;MultipleActiveResultSets=true;Trust Server Certificate=true";
-
 builder.Services.AddDbContext<UserPermissionContext>(opt => opt.UseSqlServer(connectionString: connection, sqlServerOptionsAction: op =>
 {
     op.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
