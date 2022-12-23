@@ -27,4 +27,10 @@
     <ProjectReference Include="..\UserPermission.Repository\UserPermission.Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="testhost.deps.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

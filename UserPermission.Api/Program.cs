@@ -1,11 +1,7 @@
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using System.Configuration;
 using System.Reflection;
 using UserPermission.Api.Services;
-using UserPermission.Domain.Interface.Business;
 using UserPermission.Repository;
 
 Log.Logger = new LoggerConfiguration()
@@ -36,6 +32,8 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
     builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
 }));
+
+connection = "Server=JOSEDIAZ;Database=Permission_1;Trusted_Connection=True;MultipleActiveResultSets=true;Trust Server Certificate=true";
 
 builder.Services.AddDbContext<UserPermissionContext>(opt => opt.UseSqlServer(connectionString: connection, sqlServerOptionsAction: op =>
 {
@@ -70,6 +68,6 @@ app.UseAuthorization();
 app.ConfigureExceptionHandler();
 app.MapControllers();
 
-
 app.Run();
 
+public partial class Program { }

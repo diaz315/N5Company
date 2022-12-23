@@ -2,6 +2,7 @@
 using Serilog;
 using System.Configuration;
 using System.Resources;
+using System.Runtime.InteropServices;
 using UserPermission.Business;
 using UserPermission.Domain;
 using UserPermission.Domain.Interface.Business;
@@ -15,17 +16,13 @@ namespace UserPermission.Api.Services
         //ISaveOperationService
 
         public static void InjectCustomService(this IServiceCollection services)
-        {
-            //Repositorio
-            //services.AddScoped<IEmployeeGeneralDataRepository<EmployeeGeneralDataDTO, RecordProfileDTO>, EmployeeGeneralDataRepository>();
-            //Servicios
-
+        {   
+            services.AddScoped<ICLog<object>, CLog>();
             services.AddScoped<ISaveOperationService, SaveOperationService>();
             services.AddScoped<IKafkaService, KafkaService>();
             services.AddScoped<IPermissionService<Permission>, PermissionService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IElasticSearchService<Permission>, ElasticSearchService>();
-
         }
 
         public static IApplicationBuilder UResponseMiddleware(this IApplicationBuilder builder)

@@ -7,7 +7,7 @@ using UserPermission.Domain.Interface.General;
 
 namespace UserPermission.Domain.Interface.Business
 {
-    public interface IPermissionService<T>: IRemove<T>, IAdd<T>, ISelect<T> where T : class
+    public interface IPermissionService<T>: IRemove<T>, IAdd<T>, IModify<T>, ISelect<T> where T : class
     {
     }
 }

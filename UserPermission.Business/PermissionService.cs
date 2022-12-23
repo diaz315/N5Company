@@ -62,7 +62,10 @@ namespace UserPermission.Business
 
         }
 
-        public void Remove(Permission entity)
+        public void Remove(Permission entity) { 
+        
+        }
+        public void Modify(Permission entity)
         {
             try
             {
